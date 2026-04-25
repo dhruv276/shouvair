@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Checkout | Shouvair</title>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Playfair+Display:wght@500;700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+  <style>
+    :root {
+      --primary: #2c3e50;
+      --secondary: #b8860b;
+      --accent: #d4af37;
+      --background: #ffffff;
+      --text-dark: #2c3e50;
+      --text-light: #ffffff;
+      --neutral-light: #f5f6f7;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      color: var(--text-dark);
+      background-color: var(--background);
+      line-height: 1.6;
+      scroll-behavior: smooth;
+    }
+
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem 5%;
+      background-color: var(--background);
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .brand-name {
+      font-size: 1.5rem;
+      color: var(--primary);
+      font-weight: bold;
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+    }
+
+    .nav-links a {
+      color: var(--primary);
+      text-decoration: none;
+      font-size: 1rem;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+
+    .nav-links a:hover {
+      color: var(--secondary);
+    }
+
+    .auth-buttons {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .auth-buttons a {
+      padding: 0.8rem 1.5rem;
+      border-radius: 3px;
+      text-decoration: none;
+      font-weight: 500;
+      transition: all 0.3s;
+    }
+
+    .login-btn {
+      color: var(--primary);
+      border: 1px solid var(--primary);
+    }
+
+    .login-btn:hover {
+      background-color: var(--primary);
+      color: var(--text-light);
+    }
+
+    .register-btn {
+      background-color: var(--primary);
+      color: var(--text-light);
+    }
+
+    .register-btn:hover {
+      background-color: var(--secondary);
+    }
+
+    .hero {
+      position: relative;
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: var(--text-light);
+    }
+
+    .hero h1 {
+      font-size: 2.5rem;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+      margin-top: 0.5rem;
+    }
+
+    .section {
+      padding: 4rem 10%;
+      text-align: center;
+      background-color: #9482827b;
+    }
+
+    .section-title h2 {
+      font-size: 2.5rem;
+      color: #070003;
+      margin-bottom: 2.5rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-family: 'Cinzel', serif;
+      font-weight: 500;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 3rem;
+      justify-content: center;
+      align-items: stretch;
+    }
+
+    .facility {
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+      text-align: center;
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+      cursor: pointer;
+      padding-bottom: 1rem;
+    }
+
+    .facility:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 25px rgba(0, 0, 0, 0.2);
+    }
+
+    .facility:active {
+      transform: scale(0.98);
+    }
+
+    .facility img {
+      width: 100%;
+      height: 250px;
+      object-fit: cover;
+      border-bottom: 4px solid #f4dde5;
+      border-radius: 10px 10px 0 0;
+    }
+
+    .facility h3 {
+      margin: 1rem 0;
+      color: #060002;
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+
+    .facility p {
+      padding: 0 1.5rem 1rem;
+      font-size: 1.1rem;
+      color: #444;
+      line-height: 1.5;
+    }
+
+
+
+    /* --- reserve page styles (kept as before) --- */
+    body {
+      font-family: 'Playfair Display', serif;
+      background: linear-gradient(135deg, #f5f3ef 0%, #e8e4d9 100%);
+      margin: 0;
+      color: #232323;
+    }
+
+    .container {
+      max-width: 700px;
+      margin: 140px auto;
+      background: #fff;
+      border-radius: 12px;
+      padding: 28px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    }
+
+    label {
+      display: block;
+      margin-top: 12px;
+      font-weight: bold;
+    }
+
+    input,
+    button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 6px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 16px;
+    }
+
+    button {
+      background: linear-gradient(135deg, #a19496, #b7ad93);
+      color: #fff;
+      font-weight: bold;
+      cursor: pointer;
+      border: none;
+    }
+
+    #map {
+      width: 100%;
+      height: 260px;
+      border-radius: 10px;
+      margin-top: 12px;
+      display: none;
+    }
+
+    .msg.success {
+      background: #e6ffed;
+      color: #22543d;
+      padding: 12px;
+      border-radius: 8px;
+    }
+
+    .msg.error {
+      background: #ffe6e6;
+      color: #8b0000;
+      padding: 12px;
+      border-radius: 8px;
+    }
+
+    .small {
+      font-size: 0.9rem;
+      color: #666;
+      margin-top: 6px;
+    }
+
+    .cta-section {
+      background: rgba(0, 0, 0, 0.97);
+      color: #edeae1;
+      padding: 2rem 5%;
+      text-align: center;
+      font-family: 'Cinzel', serif;
+      font-size: 20px;
+      font-weight: 200;
+    }
+
+    .cta-button {
+      display: inline-block;
+      padding: 1rem 2.5rem;
+      background-color: white;
+      color: black;
+      text-decoration: none;
+      border-radius: 3px;
+      font-weight: 500;
+      transition: all 0.3s;
+    }
+
+    .cta-button:hover {
+      background-color: rgba(152, 149, 149, 0.95);
+    }
+
+    footer {
+      background-color: black;
+      color: white;
+      text-align: center;
+      padding: 2rem 0;
+    }
+
+    @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600&family=Playfair+Display:wght@500&display=swap');
+
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 50px;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(10px);
+      position: fixed;
+      width: 100%;
+      top: 0;
+      left: 0;
+      z-index: 1000;
+    }
+
+    .brand-name {
+      font-family: 'Cinzel', serif;
+      font-size: 32px;
+      font-weight: 600;
+      color: #edeae1;
+      text-decoration: none;
+      transition: color 0.3s ease-in-out;
+    }
+
+    .brand-name:hover {
+      color: #fff;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 25px;
+    }
+
+    .nav-links a {
+      font-family: 'Playfair Display', serif;
+      font-size: 18px;
+      color: #fff;
+      text-decoration: none;
+      position: relative;
+      transition: color 0.3s ease-in-out;
+    }
+
+    .nav-links a::after {
+      content: "";
+      position: absolute;
+      width: 0%;
+      height: 2px;
+      bottom: -5px;
+      left: 50%;
+      background-color: #e9e4d6;
+      transition: width 0.3s ease, left 0.3s ease;
+    }
+
+    .nav-links a:hover {
+      color: #d4af37;
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+      left: 0;
+    }
+
+    .auth-buttons .register-btn {
+      font-family: 'Cinzel', serif;
+      font-size: 18px;
+      font-weight: bold;
+      color: #fff;
+      background: linear-gradient(135deg, #a19496, #b7ad93);
+      padding: 10px 20px;
+      border-radius: 25px;
+      text-decoration: none;
+      transition: transform 0.2s ease, box-shadow 0.3s ease;
+    }
+
+    .auth-buttons .register-btn:hover {
+      transform: scale(1.1);
+      box-shadow: 0px 5px 15px rgba(212, 175, 55, 0.5);
+    }
+
+    .background-video {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: -1;
+      filter: brightness(60%);
+    }
+
+    .brand-logo {
+      width: 80px;
+      height: 80px;
+      vertical-align: middle;
+      /* transform: scaleX(-1); */
+    }
+  </style>
+</head>
+
+<body>
+  <nav class="navbar">
+    <a href="/" class="brand-name">
+      <img src="images/image.png" alt="Shouvair" class="brand-logo">
+    </a>
+    <div class="nav-links">
+      <a href="/dashboard">Brands</a>
+      <a href="/about">About</a>
+      <a href="/contact">Contact</a>
+      <a href="/reserve">Cart</a>
+    </div>
+    <div class="auth-buttons">
+      <a href="/user" class="register-btn">User</a>
+    </div>
+  </nav>
+
+
+  <div class="container">
+    <h1>Place Your Order</h1>
+
+    <% if (message) { %>
+      <div class="msg success">
+        <%= message %>
+      </div>
+      <% } %>
+        <% if (error) { %>
+          <div class="msg error">
+            <%= error %>
+          </div>
+          <% } %>
+
+            <div id="locationDisplay" class="small"></div>
+            <div id="map"></div>
+
+            <form id="reserveForm" action="/reserve" method="POST">
+              <label for="fullName">Full Name (for this order):</label>
+              <input type="text" id="fullName" name="fullName" required>
+
+              <label for="contactNumber">Contact Number:</label>
+              <input type="tel" id="contactNumber" name="contactNumber" required>
+
+              <label for="userLocation">Delivery Location:</label>
+              <input type="text" id="userLocation" name="location" required readonly style="background:#fff;">
+              <div style="display:flex;gap:10px;margin-top:8px;">
+                <button id="getLocationBtn" type="button" style="flex:1;">Detect My Location</button>
+                <button id="verifyLocationBtn" type="button" style="flex:1;display:none;">Verify & Save</button>
+              </div>
+              <!-- 🔹 NEW: Order details from brand page cart -->
+              <div id="orderDetails" style="margin-top:18px;padding:12px;border-radius:10px;
+                  border:1px solid #ddd;background:#fafafa;">
+                <h3 id="brandTitle" style="margin:0 0 8px 0;font-size:1rem;color:#2c3e50;">
+                  Order Details
+                </h3>
+                <ul id="orderItemsList" style="list-style:none;margin:0;padding:0;font-size:0.95rem;"></ul>
+              </div>
+              <!-- 🔹 END NEW -->
+
+
+              <label for="totalPrice" style="margin-top:12px;">Total Price (₹):</label>
+              <input type="number" id="totalPrice" name="totalPrice" required min="0" step="0.01" readonly>
+
+              <button type="submit" style="margin-top:18px;">Checkout</button>
+            </form>
+  </div>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+  <script>
+    // --- Map geocode helpers ---
+    let lastPlaceName = '';
+
+    function showLocationOnMap(lat, lng, placeName) {
+      const mapDiv = document.getElementById('map');
+      mapDiv.style.display = 'block';
+      if (window._leafletMap) window._leafletMap.remove();
+      const map = L.map('map').setView([lat, lng], 15);
+      window._leafletMap = map;
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19, attribution: '© OpenStreetMap' }).addTo(map);
+      L.marker([lat, lng]).addTo(map).bindPopup(placeName).openPopup();
+    }
+
+    function reverseGeocode(lat, lng, callback) {
+      const url = `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lng}`;
+      fetch(url).then(r => r.json()).then(data => {
+        if (data && data.display_name) callback(data.display_name); else callback('Unknown Place');
+      }).catch(() => callback('Unknown Place'));
+    }
+
+    function handleLocation(lat, lng, displayDiv) {
+      displayDiv.textContent = 'Finding place name...';
+      reverseGeocode(lat, lng, function (placeName) {
+        lastPlaceName = placeName;
+        displayDiv.textContent = 'You are at: ' + placeName;
+        showLocationOnMap(lat, lng, placeName);
+        document.getElementById('verifyLocationBtn').style.display = 'inline-block';
+      });
+    }
+
+    document.getElementById('getLocationBtn').addEventListener('click', function () {
+      const display = document.getElementById('locationDisplay');
+      document.getElementById('map').style.display = 'none';
+      document.getElementById('verifyLocationBtn').style.display = 'none';
+      if (!navigator.geolocation) {
+        display.textContent = 'Geolocation is not supported by your browser.';
+        return;
+      }
+      display.textContent = 'Locating...';
+      navigator.geolocation.getCurrentPosition(function (position) {
+        handleLocation(position.coords.latitude, position.coords.longitude, display);
+      }, function () {
+        display.textContent = 'Unable to retrieve your location.';
+      });
+    });
+
+    document.getElementById('verifyLocationBtn').addEventListener('click', function () {
+      const locationInput = document.getElementById('userLocation');
+      locationInput.value = lastPlaceName;
+      localStorage.setItem('userLocation', lastPlaceName);
+      document.getElementById('verifyLocationBtn').style.display = 'none';
+      document.getElementById('locationDisplay').textContent = 'Location verified and saved.';
+      document.getElementById('map').style.display = 'none';
+    });
+
+    /* document.addEventListener('DOMContentLoaded', function() {
+      const totalPriceInput = document.getElementById('totalPrice');
+      const storedPrice = localStorage.getItem('totalPrice');
+      if (storedPrice) totalPriceInput.value = parseFloat(storedPrice).toFixed(2);
+
+      const loc = localStorage.getItem('userLocation') || localStorage.getItem('deliveryLocation');
+      if (loc) {
+        document.getElementById('userLocation').value = loc;
+        document.getElementById('locationDisplay').textContent = 'Location loaded: ' + loc;
+      }
+
+      document.getElementById('reserveForm').addEventListener('submit', function(){
+        if (!totalPriceInput.value && storedPrice) totalPriceInput.value = parseFloat(storedPrice).toFixed(2);
+        if (!document.getElementById('userLocation').value && lastPlaceName) {
+          document.getElementById('userLocation').value = lastPlaceName;
+        }
+      });
+    }); */
+    document.addEventListener('DOMContentLoaded', function () {
+      const totalPriceInput = document.getElementById('totalPrice');
+      const storedPrice = localStorage.getItem('totalPrice');
+      if (storedPrice) totalPriceInput.value = parseFloat(storedPrice).toFixed(2);
+
+      const loc = localStorage.getItem('userLocation') || localStorage.getItem('deliveryLocation');
+      if (loc) {
+        document.getElementById('userLocation').value = loc;
+        document.getElementById('locationDisplay').textContent = 'Location loaded: ' + loc;
+      }
+
+      // 🔹 NEW: show order details from cart (same one used on brand pages)
+      const orderList = document.getElementById('orderItemsList');
+      if (orderList) {
+        const cart = JSON.parse(localStorage.getItem('cart') || '{}');
+
+        const brandTitle = document.getElementById("brandTitle");
+        const brand = localStorage.getItem("brandName");
+        if (brand) {
+          brandTitle.textContent = brand + " - Order Details";
+        }
+
+
+        function renderOrderDetails() {
+          orderList.innerHTML = '';
+          const items = Object.keys(cart);
+
+          if (!items.length) {
+            const li = document.createElement('li');
+            li.textContent = 'Your cart is empty. Go back to a brand page and add some items.';
+            li.style.color = '#777';
+            orderList.appendChild(li);
+            return;
+          }
+
+          /*   items.forEach(name => {
+               const qty = cart[name];
+               if (!qty || qty <= 0) return;
+   
+               const li = document.createElement('li');
+               li.style.display = 'flex';
+               li.style.justifyContent = 'space-between';
+               li.style.marginBottom = '4px';
+   
+               const nameSpan = document.createElement('span');
+               nameSpan.textContent = name;
+   
+               const qtySpan = document.createElement('span');
+               qtySpan.textContent = 'x' + qty;
+   
+               li.appendChild(nameSpan);
+               li.appendChild(qtySpan);
+               orderList.appendChild(li);
+             }); */
+
+          items.forEach(name => {
+            const item = cart[name]; // { qty: X, price: Y }
+            if (!item || item.qty <= 0) return;
+
+            const li = document.createElement('li');
+            li.style.display = 'flex';
+            li.style.justifyContent = 'space-between';
+            li.style.marginBottom = '4px';
+
+            const nameSpan = document.createElement('span');
+            nameSpan.textContent = `${name} — ₹${item.price}`;
+
+            const qtySpan = document.createElement('span');
+            qtySpan.textContent = `x${item.qty}`;
+
+            li.appendChild(nameSpan);
+            li.appendChild(qtySpan);
+            orderList.appendChild(li);
+          });
+
+        }
+
+        renderOrderDetails();
+      }
+      // 🔹 END NEW
+
+      document.getElementById('reserveForm').addEventListener('submit', function () {
+        if (!totalPriceInput.value && storedPrice) {
+          totalPriceInput.value = parseFloat(storedPrice).toFixed(2);
+        }
+        if (!document.getElementById('userLocation').value && lastPlaceName) {
+          document.getElementById('userLocation').value = lastPlaceName;
+        }
+      });
+    });
+
+
+  </script>
+
+  <section class="cta-section">
+    <h2>Scoop Into Happiness</h2>
+    <br>
+    <p>Order your favorite ice cream and make every moment sweeter</p>
+  </section>
+
+  <footer>&copy; 2026 Shouvair | All Rights Reserved</footer>
+</body>
+
+</html>

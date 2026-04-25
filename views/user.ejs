@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>User Profile | Shouvair</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Playfair+Display:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+   
+   :root {
+            --primary: #2c3e50;
+            --secondary: #b8860b;
+            --accent: #d4af37;
+            --background: #ffffff;
+            --text-dark: #2c3e50;
+            --text-light: #ffffff;
+            --neutral-light: #f5f6f7;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            color: var(--text-dark);
+            background-color: var(--background);
+            line-height: 1.6;
+            scroll-behavior: smooth;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 5%;
+            background-color: var(--background);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .brand-name {
+            font-size: 1.5rem;
+            color: var(--primary);
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--primary);
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--secondary);
+        }
+
+        .auth-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .auth-buttons a {
+            padding: 0.8rem 1.5rem;
+            border-radius: 3px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+    .container {
+      max-width:900px;
+      margin:140px auto;
+      background:#fff;
+      border-radius:12px;
+      padding:28px;
+      box-shadow:0 10px 30px rgba(0,0,0,0.08);
+    }
+    h1 {
+      font-family:'Cinzel', serif;
+      font-size:2rem;
+      margin-bottom:8px;
+    }
+    .meta {
+      color:#7a6b5a;
+      margin-bottom:16px;
+    }
+    .orders { margin-top:20px; }
+    .order-item {
+      padding:12px 16px;
+      border-radius:8px;
+      background:#faf7f2;
+      margin-bottom:10px;
+      box-shadow:0 2px 8px rgba(0,0,0,0.04);
+      white-space: pre-line;
+    }
+    .no-orders { color:#a07b60; }
+    
+        .cta-section {
+            background: rgba(0, 0, 0, 0.97);
+            color: #edeae1;
+            padding: 2rem 5%;
+            text-align: center;
+            font-family: 'Cinzel', serif;
+            font-size: 20px;
+            font-weight: 200;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            background-color: white;
+            color: black;
+            text-decoration: none;
+            border-radius: 3px;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .cta-button:hover {
+            background-color: rgba(152, 149, 149, 0.95);
+        }
+
+        footer {
+            background-color: black;
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+        }    
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600&family=Playfair+Display:wght@500&display=swap');
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 50px;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+        }
+
+        .brand-name {
+            font-family: 'Cinzel', serif;
+            font-size: 32px;
+            font-weight: 600;
+            color: #edeae1;
+            text-decoration: none;
+            transition: color 0.3s ease-in-out;
+        }
+
+        .brand-name:hover {
+            color: #fff;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 25px;
+        }
+
+        .nav-links a {
+            font-family: 'Playfair Display', serif;
+            font-size: 18px;
+            color: #fff;
+            text-decoration: none;
+            position: relative;
+            transition: color 0.3s ease-in-out;
+        }
+
+        .nav-links a::after {
+            content: "";
+            position: absolute;
+            width: 0%;
+            height: 2px;
+            bottom: -5px;
+            left: 50%;
+            background-color: #e9e4d6;
+            transition: width 0.3s ease, left 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #d4af37;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+            left: 0;
+        }
+
+        .auth-buttons .register-btn {
+            font-family: 'Cinzel', serif;
+            font-size: 18px;
+            font-weight: bold;
+            color: #fff;
+            background: linear-gradient(135deg, #a19496, #b7ad93);
+            padding: 10px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            transition: transform 0.2s ease, box-shadow 0.3s ease;
+        }
+
+        .auth-buttons .register-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0px 5px 15px rgba(212, 175, 55, 0.5);
+        }
+
+        .background-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+            filter: brightness(60%);
+        }
+
+        .brand-logo {
+            width: 80px;
+            height: 80px;
+            vertical-align: middle;
+            /* transform: scaleX(-1); */
+        }
+  </style>
+</head>
+<body>
+    <nav class="navbar">
+     <a href="/" class="brand-name">
+        <img src="images/image.png" alt="Shouvair" class="brand-logo">
+     </a>
+     <div class="nav-links">
+       <a href="/dashboard">Brands</a>
+       <a href="/about">About</a>
+       <a href="/contact">Contact</a>
+       <a href="/reserve">Cart</a>
+     </div>
+     <div class="auth-buttons">
+       <a href="/logout" class="register-btn">Logout</a>
+     </div>
+  </nav>
+
+  <div class="container">
+    <h1>User Profile</h1>
+    <p class="meta">
+      Hello <strong><%= userData.username || 'Guest' %></strong> — 
+      Membership: <em><%= userData.membershipStatus %></em>
+    </p>
+
+    <section class="orders">
+      <h2>Your Orders</h2>
+      <% if (userData.orders && userData.orders.length > 0) { %>
+        <% userData.orders.forEach(function(order){ %>
+          <div class="order-item">
+Ordered by <%= order.fullName %>
+Delivery Address - <%= order.location %>
+Total - ₹<%= order.totalPrice %>
+          </div>
+        <% }) %>
+      <% } else { %>
+        <p class="no-orders">You have no orders yet.</p>
+      <% } %>
+    </section>
+
+    <% if (message) { %>
+      <div style="margin-top:16px;padding:12px;background:#e6ffed;border-radius:8px;">
+        <%= message %>
+      </div>
+    <% } %>
+  </div>
+    <section class="cta-section">
+    <h2>Scoop Into Happiness</h2>
+    <br>
+    <p>Order your favorite ice cream and make every moment sweeter</p>
+  </section>
+
+  <footer>&copy; 2026 Shouvair | All Rights Reserved</footer>
+</body>
+</html>

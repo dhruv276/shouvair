@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Caps</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Playfair+Display:wght@500;700&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --primary: #2c3e50;
+      --secondary: #b8860b;
+      --accent: #d4af37;
+      --background: #ffffff;
+      --text-dark: #2c3e50;
+      --text-light: #ffffff;
+      --neutral-light: #f5f6f7;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      color: var(--text-dark);
+      background-color: var(--background);
+      line-height: 1.6;
+      scroll-behavior: smooth;
+    }
+
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem 5%;
+      background-color: var(--background);
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .brand-name {
+      font-size: 1.5rem;
+      color: var(--primary);
+      font-weight: bold;
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+    }
+
+    .nav-links a {
+      color: var(--primary);
+      text-decoration: none;
+      font-size: 1rem;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+
+    .nav-links a:hover {
+      color: var(--secondary);
+    }
+
+    .auth-buttons {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .auth-buttons a {
+      padding: 0.8rem 1.5rem;
+      border-radius: 3px;
+      text-decoration: none;
+      font-weight: 500;
+      transition: all 0.3s;
+    }
+
+    .login-btn {
+      color: var(--primary);
+      border: 1px solid var(--primary);
+    }
+
+    .login-btn:hover {
+      background-color: var(--primary);
+      color: var(--text-light);
+    }
+
+    .register-btn {
+      background-color: var(--primary);
+      color: var(--text-light);
+    }
+
+    .register-btn:hover {
+      background-color: var(--secondary);
+    }
+
+    .hero {
+      height: 85vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0)),
+        url('https://www.cafecoffeeday.com/sites/default/files/1920x760%20%281%29.jpg');
+      background-size: cover;
+      background-position: center;
+      color: var(--text-light);
+      position: relative;
+    }
+
+
+    .hero h1 {
+      font-size: 2.5rem;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+      margin-top: 0.5rem;
+    }
+
+    /* General Section Styling */
+    .section {
+      padding: 4rem 10%;
+      text-align: center;
+      background-color: #9482827b;
+      /* Light beige pink background */
+    }
+
+    /* Section Title */
+    .section-title h2 {
+      font-size: 2.5rem;
+      color: #070003;
+      /* Deeper pink for contrast */
+      margin-bottom: 2.5rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-family: 'Cinzel', serif;
+      font-weight: 500;
+
+    }
+
+    /* Responsive Grid Layout */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 3rem;
+      justify-content: center;
+      align-items: stretch;
+    }
+
+    /* Facility Card */
+    .facility {
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+      text-align: center;
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+      cursor: pointer;
+      padding-bottom: 1rem;
+    }
+
+    /* Hover and Active Effects */
+    .facility:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 25px rgba(0, 0, 0, 0.2);
+    }
+
+    .facility:active {
+      transform: scale(0.98);
+    }
+
+    /* Facility Image */
+    .facility img {
+      width: 100%;
+      height: 250px;
+      object-fit: cover;
+      border-bottom: 4px solid #f4dde5;
+      /* Dark pink accent */
+      border-radius: 10px 10px 0 0;
+    }
+
+    /* Facility Title */
+    .facility h3 {
+      margin: 1rem 0;
+      color: #060002;
+      /* Dark pink title */
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+
+    /* Facility Description */
+    .facility p {
+      padding: 0 1.5rem 1rem;
+      font-size: 1.1rem;
+      color: #444;
+      /* Darker text for readability */
+      line-height: 1.5;
+    }
+
+
+    /* footer */
+    .cta-section {
+      background: rgba(0, 0, 0, 0.97);
+      color: rgb(122, 119, 119);
+      padding: 4rem 10%;
+      text-align: center;
+      font-family: 'Cinzel', serif;
+      font-size: 20px;
+      font-weight: 200;
+      color: #edeae1;
+      /* Gold color */
+      text-decoration: none;
+      transition: color 0.3s ease-in-out;
+    }
+
+    .cta-button {
+      display: inline-block;
+      padding: 1rem 2.5rem;
+      background-color: white;
+      color: black;
+      text-decoration: none;
+      border-radius: 3px;
+      font-weight: 500;
+      transition: all 0.3s;
+    }
+
+    .cta-button:hover {
+      background-color: rgba(152, 149, 149, 0.95);
+    }
+
+    footer {
+      background-color: black;
+      color: white;
+      text-align: center;
+      padding: 2rem 0;
+    }
+
+    /* main header image */
+    .hero-text {
+      font-family: 'Cinzel', serif;
+      font-size: 60px;
+      font-weight: 500;
+      color: #fff;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    .hero-subtext {
+      font-family: 'Playfair Display', serif;
+      font-size: 40px;
+      font-weight: 200;
+      color: #f1eadd;
+      font-style: italic;
+    }
+
+    @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600&family=Playfair+Display:wght@500&display=swap');
+
+    /* navbar */
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 50px;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(10px);
+      position: fixed;
+      width: 100%;
+      top: 0;
+      left: 0;
+      z-index: 1000;
+    }
+
+    .brand-name {
+      font-family: 'Cinzel', serif;
+      font-size: 32px;
+      font-weight: 600;
+      color: #edeae1;
+      /* Gold color */
+      text-decoration: none;
+      transition: color 0.3s ease-in-out;
+    }
+
+    .brand-name:hover {
+      color: #fff;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 25px;
+    }
+
+    .nav-links a {
+      font-family: 'Playfair Display', serif;
+      font-size: 18px;
+      color: #fff;
+      text-decoration: none;
+      position: relative;
+      transition: color 0.3s ease-in-out;
+    }
+
+    .nav-links a::after {
+      content: "";
+      position: absolute;
+      width: 0%;
+      height: 2px;
+      bottom: -5px;
+      left: 50%;
+      background-color: #e9e4d6;
+      transition: width 0.3s ease, left 0.3s ease;
+    }
+
+    .nav-links a:hover {
+      color: #d4af37;
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+      left: 0;
+    }
+
+    .auth-buttons .register-btn {
+      font-family: 'Cinzel', serif;
+      font-size: 18px;
+      font-weight: bold;
+      color: #fff;
+      background: linear-gradient(135deg, #a19496, #b7ad93);
+      padding: 10px 20px;
+      border-radius: 25px;
+      text-decoration: none;
+      transition: transform 0.2s ease, box-shadow 0.3s ease;
+    }
+
+    .auth-buttons .register-btn:hover {
+      transform: scale(1.1);
+      box-shadow: 0px 5px 15px rgba(212, 175, 55, 0.5);
+    }
+
+
+    .restaurant-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+      padding: 3rem 5%;
+      background-color: #f8f5f0;
+    }
+
+    .restaurant-card {
+      background-color: #ffffff;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .restaurant-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+    }
+
+    .restaurant-card img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      border-bottom: 2px solid #d4af37;
+    }
+
+    .restaurant-content {
+      padding: 1.5rem;
+      text-align: center;
+    }
+
+    .restaurant-content h3 {
+      font-size: 1.5rem;
+      font-family: 'Cinzel', serif;
+      color: #2c3e50;
+      margin-bottom: 0.5rem;
+    }
+
+    .restaurant-content .description {
+      font-size: 1rem;
+      color: #555;
+      margin-bottom: 0.3rem;
+    }
+
+    .restaurant-content .location {
+      font-size: 0.95rem;
+      color: #888;
+      margin-bottom: 1.2rem;
+    }
+
+    /*  */
+    .animated-banner {
+      display: flex;
+      width: 100%;
+      height: 85vh;
+      margin: 0;
+      padding: 0;
+    }
+
+    .animated-panel {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      animation: float 3s ease-in-out infinite;
+    }
+
+    .panel1 {
+      background-color: #fba8a3;
+    }
+
+    .panel2 {
+      background-color: #ffd900;
+    }
+
+    .panel3 {
+      background-color: #9de5f3;
+    }
+
+    .animated-panel img {
+      max-height: 400px;
+      width: auto;
+      object-fit: contain;
+      margin-bottom: 2rem;
+    }
+
+    .panel-button {
+      background-color: #d9534f;
+      color: white;
+      font-weight: bold;
+      padding: 0.8rem 1.5rem;
+      border-radius: 50px;
+      text-decoration: none;
+      transition: background-color 0.3s ease, transform 0.3s ease;
+    }
+
+    .panel-button:hover {
+      background-color: #c9302c;
+      transform: scale(1.05);
+    }
+
+
+    .fun-text {
+      font-family: 'Baloo 2', cursive;
+      /* Cute funny font */
+      font-size: 4rem;
+      /* Adjust size as needed */
+      color: #ff6f91;
+      /* Fun pink color */
+      text-align: center;
+      animation: bounce 2s infinite;
+      /* Optional: add floating effect */
+    }
+
+    @keyframes bounce {
+
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-15px);
+      }
+    }
+
+    .brand-logo {
+      width: 80px;
+      height: 80px;
+      vertical-align: middle;
+      /* transform: scaleX(-1); */
+    }
+
+    /* Filter Styles */
+    /* Filter in Navbar */
+    .filter-container {
+      position: relative;
+    }
+
+    .filter-btn {
+      background: #2c3e50;
+      color: white;
+      padding: 8px 16px;
+      border: none;
+      border-radius: 20px;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 14px;
+      transition: background 0.3s;
+    }
+
+    .filter-btn:hover {
+      background: #b8860b;
+    }
+
+    .filter-dropdown {
+      display: none;
+      position: absolute;
+      top: 120%;
+      /* dropdown appears just below */
+      right: 0;
+      /* align to right edge */
+      background: #fff;
+      border-radius: 8px;
+      margin-top: 5px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      z-index: 2000;
+      min-width: 180px;
+    }
+
+    .filter-dropdown a {
+      display: block;
+      padding: 10px 15px;
+      text-decoration: none;
+      color: #333;
+      border-bottom: 1px solid #eee;
+      font-size: 14px;
+    }
+
+    .filter-dropdown a:hover {
+      background: #b8860b;
+      color: #fff;
+    }
+  </style>
+</head>
+
+<body>
+  <nav class="navbar">
+    <a href="#" class="brand-name">
+      <img src="images/image.png" alt="Shouvair" class="brand-logo">
+    </a>
+    <div class="nav-links">
+      <a href="/dashboard">Brands</a>
+      <a href="/about">About</a>
+      <a href="/contact">Contact</a>
+      <a href="/reserve">Cart</a>
+
+    </div>
+    <div class="auth-buttons">
+      <a href="/user" class="register-btn">user</a>
+    </div>
+  </nav>
+
+  <section class="animated-banner">
+    <div class="animated-panel panel1"><br><br><br>
+      <img src="https://i.pinimg.com/736x/d6/a8/ef/d6a8ef2965e968a0ea281dbd18e70cf7.jpg" alt="What's New">
+
+    </div>
+
+    <div class="animated-panel panel2"><br><br><br>
+      <h2 class="fun-text">Caps and Hats</h2>
+    </div>
+
+
+    <div class="animated-panel panel3"><br><br><br>
+      <img src="https://i.pinimg.com/1200x/b6/65/97/b665970d15f7aa9e0054b1b0375a13c0.jpg" alt="Shop Now">
+
+    </div>
+  </section>
+
+
+  </section>
+  <div class="restaurant-container">
+    <div class="restaurant-card">
+      <img
+        src="https://i.pinimg.com/1200x/6c/68/3d/6c683dbc10827854175ea3df2e751724.jpg"
+        alt="Brooklyn Central">
+      <div class="restaurant-content">
+        <h3>CAP</h3>
+        <!-- <p class="description">MiniCups</p> -->
+        <p class="location">Rs 350</p>
+        <a class="reserve-button"></a>
+      </div>
+    </div>
+
+    <div class="restaurant-card">
+      <img
+        src="https://i.pinimg.com/736x/a7/8b/da/a78bda34ac5b0fde972a56526d5c8086.jpg"
+        alt="Aja Restaurant">
+      <div class="restaurant-content">
+        <h3>CAP</h3>
+        <!-- <p class="description">MiniCups</p> -->
+        <p class="location">Rs 350</p>
+        <a class="reserve-button"></a>
+      </div>
+    </div>
+
+    <div class="restaurant-card">
+      <img
+        src="https://i.pinimg.com/1200x/41/99/ef/4199efddb948540ae4e41ddc3537a979.jpg"
+        alt="Eddies">
+      <div class="restaurant-content">
+        <h3>CAP</h3>
+        <!-- <p class="description">MiniCups</p> -->
+        <p class="location">Rs 350</p>
+        <a class="reserve-button"></a>
+      </div>
+    </div>
+
+    <div class="restaurant-card">
+      <img
+        src="https://i.pinimg.com/1200x/29/d1/bc/29d1bc50d1dd48b841168e1686716bcc.jpg"
+        alt="Sago Spice">
+      <div class="restaurant-content">
+        <h3>CAP</h3>
+        <!-- <p class="description">MiniCups</p> -->
+        <p class="location">Rs 350</p>
+        <a class="reserve-button"></a>
+      </div>
+    </div>
+
+
+
+    </div>
+  </div>
+
+  <script>
+    localStorage.setItem("brandName", "Cap");
+    const filterBtn = document.querySelector('.filter-btn');
+    const dropdown = document.querySelector('.filter-dropdown');
+    const links = document.querySelectorAll('.filter-dropdown a');
+    const cards = document.querySelectorAll('.restaurant-card');
+    // Total Price logic
+    let totalPrice = 0;
+    const totalPriceDiv = document.createElement('div');
+    totalPriceDiv.id = 'total-price-display';
+    totalPriceDiv.style = 'font-size:1.3rem;font-weight:bold;margin:20px 0;text-align:center;color:#2c3e50;background:#f8f5f0;padding:10px;border-radius:8px;';
+    totalPriceDiv.textContent = 'Total Price: Rs 0';
+    document.querySelector('.restaurant-container').insertAdjacentElement('beforebegin', totalPriceDiv);
+
+    // Cart logic: track quantities of products
+    // Load cart from localStorage (persist between reloads)
+    const cart = JSON.parse(localStorage.getItem('cart') || '{}');
+    document.querySelectorAll('.reserve-button').forEach(btn => {
+      // Add + and - buttons next to Add to cart
+      const plusBtn = document.createElement('button');
+      plusBtn.textContent = '+';
+      plusBtn.className = 'cart-plus-btn';
+      plusBtn.style = 'margin-left:8px;padding:2px 10px;font-size:1.1rem;';
+
+      const minusBtn = document.createElement('button');
+      minusBtn.textContent = '–';
+      minusBtn.className = 'cart-minus-btn';
+      minusBtn.style = 'margin-left:4px;padding:2px 10px;font-size:1.1rem;';
+
+      btn.parentNode.appendChild(plusBtn);
+      btn.parentNode.appendChild(minusBtn);
+
+      const card = btn.closest('.restaurant-card');
+      const productId = card.querySelector('h3').innerText.trim(); // Use product name as ID
+      const priceText = card.querySelector('.location').innerText.trim();
+      const price = parseInt(priceText.replace(/[^0-9]/g, ''));
+
+      plusBtn.addEventListener('click', function (e) {
+        e.preventDefault();
+        if (!cart[productId]) {
+          cart[productId] = { qty: 1, price: price };
+        } else {
+          cart[productId].qty++;
+        }
+
+        totalPrice += price;
+
+        localStorage.setItem('totalPrice', totalPrice);
+        localStorage.setItem('cart', JSON.stringify(cart));
+        updateCartDisplay();
+
+      });
+
+      minusBtn.addEventListener('click', function (e) {
+        e.preventDefault();
+        if (cart[productId] && cart[productId].qty > 0) {
+          cart[productId].qty--;
+          totalPrice -= price;
+
+          if (cart[productId].qty <= 0) delete cart[productId];
+
+          localStorage.setItem('cart', JSON.stringify(cart));
+          localStorage.setItem('totalPrice', totalPrice);
+          updateCartDisplay();
+        }
+
+      });
+    });
+
+    // Create a simple cart display element (shows item names + quantities)
+    const cartContainer = document.createElement('div');
+    cartContainer.id = 'cart-container';
+    cartContainer.style = 'position:fixed;right:20px;top:100px;background:#fff;border:1px solid #eee;padding:12px;border-radius:8px;box-shadow:0 6px 20px rgba(0,0,0,0.08);width:220px;max-height:60vh;overflow:auto;z-index:1500;';
+    const cartTitle = document.createElement('div');
+    cartTitle.style = 'font-weight:700;margin-bottom:8px;color:#2c3e50;text-align:center';
+    cartTitle.textContent = 'Cart';
+    const cartList = document.createElement('ul');
+    cartList.id = 'cart-items-list';
+    cartList.style = 'list-style:none;padding:0;margin:0;';
+    cartContainer.appendChild(cartTitle);
+    cartContainer.appendChild(cartList);
+    // insert cart container into the navbar so it appears attached to the top
+    const nav = document.querySelector('.navbar') || document.body;
+    // adjust cart styles for navbar placement
+    cartContainer.style.position = 'absolute';
+    cartContainer.style.right = '20px';
+    // place directly below the navbar using its height so it adapts to layout
+    const navHeight = (nav && nav.offsetHeight) ? nav.offsetHeight : 60;
+    cartContainer.style.top = navHeight + 'px';
+    cartContainer.style.width = '260px';
+    cartContainer.style.boxShadow = '0 6px 20px rgba(0,0,0,0.12)';
+    cartContainer.style.zIndex = '3000';
+    nav.appendChild(cartContainer);
+
+    // update position on window resize in case navbar height changes
+    window.addEventListener('resize', () => {
+      const h = (nav && nav.offsetHeight) ? nav.offsetHeight : 60;
+      cartContainer.style.top = h + 'px';
+    });
+
+    // Function to render cart items (name and quantity)
+    function updateCartDisplay() {
+      cartList.innerHTML = '';
+      const keys = Object.keys(cart);
+      if (keys.length === 0) {
+        const empty = document.createElement('li');
+        empty.textContent = 'Cart is empty';
+        empty.style = 'color:#777;text-align:center;padding:6px 0;';
+        cartList.appendChild(empty);
+        return;
+      }
+
+      keys.forEach(name => {
+        const item = cart[name];   // { qty: X, price: Y }
+        const qty = item.qty;
+        const price = item.price;
+
+        const li = document.createElement('li');
+        li.style = 'display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px dashed #eee;';
+
+        const nameSpan = document.createElement('span');
+        nameSpan.textContent = `${name} — ₹${price}`;
+        nameSpan.style = 'font-size:0.95rem;color:#222;';
+
+        const qtySpan = document.createElement('span');
+        qtySpan.textContent = `x${qty}`;
+        qtySpan.style = 'font-weight:600;color:#2c3e50;';
+
+        const rightGroup = document.createElement('span');
+        rightGroup.appendChild(qtySpan);
+
+        li.appendChild(nameSpan);
+        li.appendChild(rightGroup);
+
+        cartList.appendChild(li);
+      });
+
+    }
+
+    // initialize from localStorage values
+    const savedTotal = parseInt(localStorage.getItem('totalPrice')) || 0;
+    totalPrice = savedTotal;
+    totalPriceDiv.textContent = `Total Price: Rs ${totalPrice}`;
+    updateCartDisplay();
+
+    // Toggle dropdown
+    filterBtn.addEventListener('click', () => {
+      dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+    });
+
+    // Filter logic
+    links.forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const filter = link.getAttribute('data-filter');
+
+        cards.forEach(card => {
+          const category = card.querySelector('.description').innerText.trim();
+          if (filter === 'all' || category === filter) {
+            card.style.display = 'block';
+          } else {
+            card.style.display = 'none';
+          }
+        });
+
+        dropdown.style.display = 'none'; // Close dropdown after click
+      });
+    });
+
+    // Close dropdown if clicked outside
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('.filter-container')) {
+        dropdown.style.display = 'none';
+      }
+    });
+  </script>
+
+  <section class="cta-section">
+    <h2>THANKYOU!!</h2>
+    <br>
+    <p>We hope you had an unforgettable experience</p>
+    <!-- <a href="/login" class="cta-button">Book Now</a> -->
+  </section>
+
+  </div>
+
+  <footer>&copy; 2026 SHOUVAIR | All Rights Reserved</footer>
+</body>
+
+</html>
